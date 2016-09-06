@@ -52,7 +52,7 @@ class CreateAddressTables extends Migration
                     LEFT JOIN
                 common.address_states AS t_state ON t_loc.state_id = t_state.id
                     LEFT JOIN
-                common.address_country AS t_countries ON t_state.country_id = t_country.id;
+                common.address_countries AS t_country ON t_state.country_id = t_country.id;
         ");
     }
 
