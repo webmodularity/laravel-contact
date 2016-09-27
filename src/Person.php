@@ -14,7 +14,7 @@ class Person extends Model
      * @var array
      */
     protected $fillable = [
-        'email', 'first_name', 'last_name'
+        'email', 'prefix', 'first_name', 'middle_name', 'last_name', 'suffix', 'nickname'
     ];
 
     /**
@@ -25,4 +25,17 @@ class Person extends Model
     //{
     //    return $this->hasOne('App\User');
     //}
+
+    public static function getNamePartsFromFull($fullName) {
+        if (!empty($fullName) && is_string($fullName)) {
+            $nameParts = explode(' ', $fullName);
+            if (count($nameParts) == 1) {
+                return [null, $nameParts[0]];
+            } else {
+                return [array_pop($nameParts), implode(' ', $nameParts)];
+            }
+        } else {
+            return [null, null];
+        }
+    }
 }
