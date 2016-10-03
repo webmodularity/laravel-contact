@@ -17,14 +17,31 @@ class Person extends Model
         'email', 'prefix', 'first_name', 'middle_name', 'last_name', 'suffix', 'nickname'
     ];
 
-    /**
-     * Get the user record associated with the person.
-     */
+    ///**
+    // * Get the user record associated with the person.
+    // */
     // Person should not know about user? Maybe check for existence of User Model and return if exists?
     //public function user()
     //{
     //    return $this->hasOne('App\User');
     //}
+
+    public function updateNameIfEmpty($lastName = null, $firstName = null)
+    {
+        if (empty($this->last_name) || empty($this->first_name)) {
+            if (empty($this->last_name) && !empty($lastName)) {
+                $this->last_name = $lastName;
+            }
+
+            if (empty($this->first_name) && !empty($firstName)) {
+                $this->first_name = $firstName;
+            }
+
+            return $this->save();
+        }
+
+        return true;
+    }
 
     public static function getNamePartsFromFull($fullName) {
         if (!empty($fullName) && is_string($fullName)) {
