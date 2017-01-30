@@ -26,33 +26,44 @@ class Person extends Model
     //    return $this->hasOne('App\User');
     //}
 
-    public function updateNameIfEmpty($lastName = null, $firstName = null)
+    /**
+     * Will update the specified field if current value of that field is null
+     * @param $fieldName
+     * @param $value
+     * @return $this
+     */
+
+    public function updateIfNull($fieldName, $value)
     {
-        if (empty($this->last_name) || empty($this->first_name)) {
-            if (empty($this->last_name) && !empty($lastName)) {
-                $this->last_name = $lastName;
-            }
-
-            if (empty($this->first_name) && !empty($firstName)) {
-                $this->first_name = $firstName;
-            }
-
-            return $this->save();
+        if (is_null($this->$fieldName) && !is_null($value)) {
+            $this->$fieldName = $value;
+            $this->save();
         }
 
-        return true;
+        return $this;
     }
 
-    public static function getNamePartsFromFull($fullName) {
+    /**
+     * Attempts to take a full name and split into first and last
+     * @param string $fullName
+     * @return array ['firstName' => 'First', 'lastName' => 'Last']
+     */
+
+    public static function splitFullName($fullName) {
         if (!empty($fullName) && is_string($fullName)) {
             $nameParts = explode(' ', $fullName);
             if (count($nameParts) == 1) {
-                return [null, $nameParts[0]];
+                return [
+                    'firstName' => $nameParts[0]
+                ];
             } else {
-                return [array_pop($nameParts), implode(' ', $nameParts)];
+                return [
+                    'firstName' => array_shift($nameParts),
+                    'lastName', implode(' ', $nameParts)
+                ];
             }
-        } else {
-            return [null, null];
         }
+
+        return [];
     }
 }
