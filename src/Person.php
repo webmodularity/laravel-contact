@@ -17,6 +17,11 @@ class Person extends Model
         'email', 'prefix', 'first_name', 'middle_name', 'last_name', 'suffix', 'nickname'
     ];
 
+    public function getFullNameAttribute($value)
+    {
+        return $this->first_name . ' ' . $this->last_name;
+    }
+
     ///**
     // * Get the user record associated with the person.
     // */
