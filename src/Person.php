@@ -17,11 +17,6 @@ class Person extends Model
         'email', 'prefix', 'first_name', 'middle_name', 'last_name', 'suffix', 'nickname'
     ];
 
-    public function getFullNameAttribute($value)
-    {
-        return $this->first_name . ' ' . $this->last_name;
-    }
-
     ///**
     // * Get the user record associated with the person.
     // */
@@ -30,6 +25,11 @@ class Person extends Model
     //{
     //    return $this->hasOne('App\User');
     //}
+
+    public function getFullName()
+    {
+        return $this->first_name . ' ' . $this->last_name;
+    }
 
     /**
      * Will update the specified field if current value of that field is null
@@ -41,7 +41,7 @@ class Person extends Model
     public function updateIfNull($fieldName, $value)
     {
         if (is_null($this->$fieldName) && !is_null($value)) {
-            $this->$fieldName = $value;
+            $this->{$fieldName} = $value;
             $this->save();
         }
 
