@@ -49,7 +49,7 @@ class Person extends Model
     }
 
     /**
-     * Attempts to take a full name and split into first and last
+     * Takes a full name returns its best guess of first and last
      * @param string $fullName
      * @return array ['firstName' => 'First', 'lastName' => 'Last']
      */
