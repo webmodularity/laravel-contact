@@ -54,7 +54,8 @@ class Person extends Model
      * @return array ['firstName' => 'First', 'lastName' => 'Last']
      */
 
-    public static function splitFullName($fullName) {
+    public static function splitFullName($fullName)
+    {
         if (!empty($fullName) && is_string($fullName)) {
             $nameParts = explode(' ', $fullName);
             if (count($nameParts) == 1) {

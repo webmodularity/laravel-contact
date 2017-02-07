@@ -30,8 +30,16 @@ class CreatePersonTable extends Migration
             $table->integer('person_id')->unsigned()->index();
             $table->smallInteger('address_type_id')->unsigned()->default(1);
             $table->primary(['address_id', 'person_id', 'address_type_id']);
-            $table->foreign('address_id')->references('id')->on('address_streets')->onDelete('cascade')->onUpdate('cascade');
-            $table->foreign('person_id')->references('id')->on('people')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreign('address_id')
+                ->references('id')
+                ->on('address_streets')
+                ->onDelete('cascade')
+                ->onUpdate('cascade');
+            $table->foreign('person_id')
+                ->references('id')
+                ->on('people')
+                ->onDelete('cascade')
+                ->onUpdate('cascade');
         });
         // Junction Table for Phone
         Schema::create('person_phone', function (Blueprint $table) {

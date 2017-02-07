@@ -8,10 +8,10 @@ class ContactServiceProvider extends ServiceProvider
 {
     public function register()
     {
-
     }
 
-    public function boot() {
+    public function boot()
+    {
         // Migrations
         $this->loadMigrationsFrom(__DIR__ . '/../database/migrations');
     }

@@ -18,7 +18,11 @@ class CreateAddressTables extends Migration
             $table->smallInteger('state_id')->unsigned()->index();
             $table->string('zip', 20)->index();
             $table->unique(['city', 'state_id', 'zip']);
-            $table->foreign('state_id')->references('id')->on('common.address_states')->onDelete('no action')->onUpdate('cascade');
+            $table->foreign('state_id')
+                ->references('id')
+                ->on('common.address_states')
+                ->onDelete('no action')
+                ->onUpdate('cascade');
         });
 
         Schema::create('address_streets', function (Blueprint $table) {
@@ -27,7 +31,11 @@ class CreateAddressTables extends Migration
             $table->string('street2', 255);
             $table->smallInteger('location_id')->unsigned()->index();
             $table->unique(['street1', 'street2', 'location_id']);
-            $table->foreign('location_id')->references('id')->on('address_locations')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreign('location_id')
+                ->references('id')
+                ->on('address_locations')
+                ->onDelete('cascade')
+                ->onUpdate('cascade');
         });
 
         DB::statement("
