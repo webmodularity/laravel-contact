@@ -3,7 +3,6 @@
 namespace WebModularity\LaravelContact;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Query\Builder;
 
 /**
  * WebModularity\LaravelContact\Person
@@ -16,14 +15,6 @@ use Illuminate\Database\Query\Builder;
  * @property string $last_name
  * @property string $suffix
  * @property string $nickname
- * @method static Builder|Person whereEmail($value)
- * @method static Builder|Person whereFirstName($value)
- * @method static Builder|Person whereId($value)
- * @method static Builder|Person whereLastName($value)
- * @method static Builder|Person whereMiddleName($value)
- * @method static Builder|Person whereNickname($value)
- * @method static Builder|Person wherePrefix($value)
- * @method static Builder|Person whereSuffix($value)
  */
 
 class Person extends Model
