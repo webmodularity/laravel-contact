@@ -3,6 +3,28 @@
 namespace WebModularity\LaravelContact;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Query\Builder;
+
+/**
+ * WebModularity\LaravelContact\Person
+ *
+ * @property int $id
+ * @property string $email
+ * @property string $prefix
+ * @property string $first_name
+ * @property string $middle_name
+ * @property string $last_name
+ * @property string $suffix
+ * @property string $nickname
+ * @method static Builder|Person whereEmail($value)
+ * @method static Builder|Person whereFirstName($value)
+ * @method static Builder|Person whereId($value)
+ * @method static Builder|Person whereLastName($value)
+ * @method static Builder|Person whereMiddleName($value)
+ * @method static Builder|Person whereNickname($value)
+ * @method static Builder|Person wherePrefix($value)
+ * @method static Builder|Person whereSuffix($value)
+ */
 
 class Person extends Model
 {
@@ -16,15 +38,6 @@ class Person extends Model
     protected $fillable = [
         'email', 'prefix', 'first_name', 'middle_name', 'last_name', 'suffix', 'nickname'
     ];
-
-    ///**
-    // * Get the user record associated with the person.
-    // */
-    // Person should not know about user? Maybe check for existence of User Model and return if exists?
-    //public function user()
-    //{
-    //    return $this->hasOne('App\User');
-    //}
 
     public function getFullName()
     {
