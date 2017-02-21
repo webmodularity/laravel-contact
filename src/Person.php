@@ -60,19 +60,16 @@ class Person extends Model
 
     public static function splitFullName($fullName)
     {
-        \Log::error($fullName);
         if (!empty($fullName) && is_string($fullName)) {
             $nameParts = explode(' ', $fullName);
             if (count($nameParts) == 1) {
-                \Log::error("First Name Found: " . print_r($nameParts, true));
                 return [
                     'firstName' => $nameParts[0]
                 ];
             } else {
-                \Log::error("Full Name Found: " . print_r($nameParts, true));
                 return [
                     'firstName' => array_shift($nameParts),
-                    'lastName', implode(' ', $nameParts)
+                    'lastName' => implode(' ', $nameParts)
                 ];
             }
         }
