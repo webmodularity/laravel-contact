@@ -13,17 +13,13 @@ class CreateAddressStates extends Migration
      */
     public function up()
     {
-        Schema::create('address_countries', function (Blueprint $table) {
+        Schema::create('address_states', function (Blueprint $table) {
             $table->smallIncrements('id');
             $table->string('name', 255)->unique();
-            $table->char('iso', 2)->unique();
-            $table->char('iso3', 3)->unique();
-            $table->char('fips', 2);
-            $table->char('continent', 2);
-            $table->char('currency_code', 3);
-            $table->char('tld', 3);
-            $table->unsignedSmallInteger('phone_code');
-            $table->string('postal_regex', 255);
+            $table->char('iso', 2)->unique()->nullable();
+            $table->unsignedSmallInteger('country_id');
+            $table->unique(['country_id', 'iso']);
+            $table->foreign('country_id')->references('id')->on('address_countries')->onUpdate('cascade');
         });
 
         $states = [
