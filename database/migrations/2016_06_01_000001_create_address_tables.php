@@ -20,7 +20,7 @@ class CreateAddressTables extends Migration
             $table->unique(['city', 'state_id', 'zip']);
             $table->foreign('state_id')
                 ->references('id')
-                ->on('common.address_states')
+                ->on('common.address_state')
                 ->onDelete('no action')
                 ->onUpdate('cascade');
         });
@@ -58,9 +58,9 @@ class CreateAddressTables extends Migration
                     LEFT JOIN
                 address_locations AS t_loc ON t_street.location_id = t_loc.id
                     LEFT JOIN
-                common.address_states AS t_state ON t_loc.state_id = t_state.id
+                common.address_state AS t_state ON t_loc.state_id = t_state.id
                     LEFT JOIN
-                common.address_countries AS t_country ON t_state.country_id = t_country.id;
+                common.address_country AS t_country ON t_state.country_id = t_country.id;
         ");
     }
 
