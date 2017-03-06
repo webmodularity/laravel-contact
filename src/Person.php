@@ -64,7 +64,8 @@ class Person extends Model
             $nameParts = explode(' ', $fullName);
             if (count($nameParts) == 1) {
                 return [
-                    'firstName' => $nameParts[0]
+                    'firstName' => $nameParts[0],
+                    'lastName' => null
                 ];
             } else {
                 return [
@@ -74,6 +75,9 @@ class Person extends Model
             }
         }
 
-        return [];
+        return [
+            'firstName' => null,
+            'lastName' => null
+        ];
     }
 }
