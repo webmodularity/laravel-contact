@@ -2,6 +2,7 @@
 
 namespace WebModularity\LaravelContact;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -26,6 +27,24 @@ class Address extends Model
         'state_id',
         'zip'
     ];
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::addGlobalScope('withState', function (Builder $builder) {
+            $builder->with('state');
+        });
+    }
+
+    public function getOneLine()
+    {
+        $street = empty($this->street2)
+            ? $this->street1
+            : $this->street1 . ',' . $this->street2;
+
+        return $street . ',' . $this->city . ',' . $this->state->iso . ',' . $this->zip;
+    }
 
     public function state()
     {
