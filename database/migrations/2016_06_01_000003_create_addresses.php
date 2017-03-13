@@ -22,7 +22,7 @@ class CreateAddresses extends Migration
             $table->index(['zip', 'city', 'state_id']);
             $table->index(['state_id', 'zip']);
             $table->index(['state_id', 'city']);
-            $table->unique(['street1', 'street2', 'city', 'state_id', 'zip']);
+            $table->unique(['street1', 'street2', 'city', 'state_id', 'zip'], 'address_unique');
             $table->foreign('state_id')->references('id')->on('address_states')->onUpdate('cascade');
         });
     }
