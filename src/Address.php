@@ -10,7 +10,9 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $id
  * @property string $street1
  * @property string $street2
- * @property int $location_id
+ * @property string $city
+ * @property int $state_id
+ * @property string $zip
  */
 
 class Address extends Model
@@ -20,11 +22,13 @@ class Address extends Model
     protected $fillable = [
         'street1',
         'street2',
-        'location_id'
+        'city',
+        'state_id',
+        'zip'
     ];
 
-    public function location()
+    public function state()
     {
-        return $this->belongsTo(AddressLocation::class);
+        return $this->belongsTo(AddressState::class);
     }
 }

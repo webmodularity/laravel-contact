@@ -16,10 +16,14 @@ class CreateAddresses extends Migration
             $table->increments('id');
             $table->string('street1', 255);
             $table->string('street2', 255);
-            $table->unsignedSmallInteger('location_id');
-            $table->index('location_id');
-            $table->unique(['street1', 'street2', 'location_id']);
-            $table->foreign('location_id')->references('id')->on('address_locations')->onUpdate('cascade');
+            $table->string('city', 255);
+            $table->unsignedSmallInteger('state_id');
+            $table->string('zip', 20);
+            $table->index(['zip', 'city', 'state_id']);
+            $table->index(['state_id', 'zip']);
+            $table->index(['state_id', 'city']);
+            $table->unique(['street1', 'street2', 'city', 'state_id', 'zip']);
+            $table->foreign('state_id')->references('id')->on('address_states')->onUpdate('cascade');
         });
     }
 
