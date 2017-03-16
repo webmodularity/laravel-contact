@@ -7,7 +7,7 @@ class AddressValidator
     public function validate($attribute, $value, $parameters, $validator)
     {
         extract($value);
-        dd($validator->hasRule('address', 'required'));
+        dd($validator->hasRule('address', 'address'));
         if ($validator->hasRule($attribute, 'required')
             && (
                 empty($street)
