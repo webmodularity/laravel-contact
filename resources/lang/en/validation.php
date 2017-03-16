@@ -1,5 +1,5 @@
 <?php
 
 return [
-    'address' => 'Unrecognized address.'
+    'address' => 'Invalid address format.'
 ];
