@@ -28,8 +28,9 @@ class AddressValidator
             if (empty($zip)) {
                 $validator->errors()->add($attribute . '.zip', 'Zip Code is required.');
             }
-            dd($validator);
             return false;
         }
+
+        return true;
     }
 }
