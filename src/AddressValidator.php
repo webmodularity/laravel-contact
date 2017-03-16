@@ -6,10 +6,10 @@ class AddressValidator
 {
     public function validate($attribute, $value, $parameters, $validator)
     {
-        extract($value);
         $validator->after(function ($validator) use ($attribute) {
             dd($validator->hasRule('business_id', ['required']));
         });
+        extract($value);
 
         if ($validator->hasRule($attribute, 'required')
             && (
