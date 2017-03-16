@@ -16,7 +16,6 @@ class AddressValidator
                 || empty($zip)
             )
         ) {
-            dd('is required!');
             if (empty($street)) {
                 $validator->errors()->add($attribute . '.street', 'Street Address is required.');
             }
