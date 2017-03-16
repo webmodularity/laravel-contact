@@ -8,7 +8,7 @@ class AddressValidator
     {
         extract($value);
         $validator->after(function ($validator) use ($attribute) {
-            dd($validator->hasRule($attribute, 'required'));
+            dd($validator->hasRule('address', ['required']));
         });
 
         if ($validator->hasRule($attribute, 'required')
