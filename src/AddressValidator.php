@@ -7,7 +7,7 @@ class AddressValidator
     public function validate($attribute, $value, $parameters, $validator)
     {
         $validator->after(function ($validator) use ($attribute) {
-            dd($validator->hasRule('business_id', ['required']));
+            dd($validator);
         });
         extract($value);
 
