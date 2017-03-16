@@ -7,9 +7,15 @@ class AddressValidator
     public function validate($attribute, $value, $parameters, $validator)
     {
         extract($value);
-        $isRequired = in_array('required', $validator->rules[$attribute]);
 
-        if ($isRequired && (empty($street) || empty($city) || empty($state_id) || empty($zip))) {
+        if ($validator->hasRule($attribute, 'required')
+            && (
+                empty($street)
+                || empty($city)
+                || empty($state_id)
+                || empty($zip)
+            )
+        ) {
             if (empty($street)) {
                 $validator->errors()->add($attribute . '.street', 'Street Address is required.');
             }
