@@ -17,6 +17,6 @@ class ContactServiceProvider extends ServiceProvider
         // Migrations
         $this->loadMigrationsFrom(__DIR__ . '/../database/migrations');
 
-        Validator::extend('address', 'AddressValidator@validate');
+        Validator::extend('address', '\WebModularity\LaravelContact\AddressValidator@validate');
     }
 }
