@@ -18,6 +18,8 @@ class AddressValidator
             $rules[$attribute . '.street'][] = 'required';
         }
 
+        $validator->addRules($rules);
+
         return true;
     }
 }
