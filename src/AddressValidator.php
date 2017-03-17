@@ -16,7 +16,7 @@ class AddressValidator
         $streetRules = $isRequired
             ? 'required|max:255'
             : 'max:255';
-        $rules[$attribute . '.street'] = ValidationRuleParser::parse($streetRules);
+        $rules[$attribute . '.street'] = $streetRules;
 
         $validator->addRules($rules);
 
