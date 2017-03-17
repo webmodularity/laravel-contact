@@ -2,7 +2,7 @@
 
 namespace WebModularity\LaravelContact;
 
-use Illuminate\Validation\ValidationRuleParser;
+use Validator;
 
 class AddressValidator
 {
@@ -10,12 +10,15 @@ class AddressValidator
     {
         extract($value);
         $isRequired = $validator->hasRule($attribute, 'Required');
-        $rules = [];
 
         // Street
         $streetRules = $isRequired
             ? 'required|max:255'
             : 'max:255';
+        $streetValidator = Validator::make(['street' => $street,[
+            'street' =>
+        ]);
+
         $rules[$attribute . '.street'] = $streetRules;
 
         $validator->addRules($rules);
