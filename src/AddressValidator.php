@@ -20,6 +20,6 @@ class AddressValidator
 
         $validator->addRules($rules);
 
-        return true;
+        return false;
     }
 }
