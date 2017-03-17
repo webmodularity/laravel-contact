@@ -31,7 +31,12 @@ class AddressValidator
         ]);
 
         if ($addressValidator->fails()) {
-            dd($addressValidator->errors());
+            foreach ($addressValidator->errors()->getMessages() as $key => $errors) {
+                foreach ($errors as $error) {
+                    $validator->errors()->add($attribute . '.' . $key, $error);
+                }
+            }
+            return false;
         }
 
         return false;
