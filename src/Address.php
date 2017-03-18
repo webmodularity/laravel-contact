@@ -39,4 +39,24 @@ class Address extends Model
     {
         return $this->belongsTo(AddressState::class);
     }
+
+    /**
+     * Try and delete address record but ignore failures as this address may be related to other records
+     *
+     * @param int $addressId
+     */
+
+    public static function attemptDelete($addressId)
+    {
+        if (is_int($addressId) && $addressId > 0) {
+            $address = static::find($addressId);
+            if (!is_null($address)) {
+                try {
+                    $address->delete();
+                } catch (\Exception $exception) {
+                    // Stay quiet
+                }
+            }
+        }
+    }
 }
