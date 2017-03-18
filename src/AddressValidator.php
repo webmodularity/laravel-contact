@@ -12,13 +12,16 @@ class AddressValidator
 
     public function validate($attribute, $value, $parameters, $validator)
     {
-        $hasError = false;
-        $this->isRequired = $validator->hasRule($attribute, 'Required');
         $this->attribute = $attribute;
         $this->validator = $validator;
 
+        $hasError = false;
+        $this->isRequired = $this->validator->hasRule($this->attribute, 'Required');
+
         $street = array_pull($value, 'street');
         $zip = array_pull($value, 'zip');
+
+        dd($zip);
 
         // Street
         $streetRules = [
