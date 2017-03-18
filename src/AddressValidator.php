@@ -18,10 +18,8 @@ class AddressValidator
         $hasError = false;
         $this->isRequired = $this->validator->hasRule($this->attribute, 'Required');
 
-        $street = array_pull($value, 'street');
-        $zip = array_pull($value, 'zip');
-
-        dd($zip);
+        $street['street'] = array_pull($value, 'street');
+        $zip['zip'] = array_pull($value, 'zip');
 
         // Street
         $streetRules = [
