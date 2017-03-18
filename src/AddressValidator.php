@@ -71,7 +71,7 @@ class AddressValidator
         $zipRules = [
             'max:20'
         ];
-        if (!is_null($value['state_id']) && $this->validator->errors()->has($this->attribute . '.' . 'state_id')) {
+        if (!is_null($value['state_id']) && !$this->validator->errors()->has($this->attribute . '.' . 'state_id')) {
             $postalRegex = AddressState::select('postal_regex')
                 ->leftJoin('address_countries', 'address_states.country_id', '=', 'address_countries.id')
                 ->where('address_states.id', $value['state_id'])
