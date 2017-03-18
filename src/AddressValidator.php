@@ -45,7 +45,7 @@ class AddressValidator
         $cityRules = [
             'max:100'
         ];
-        if ($this->isRequired) {
+        if ($this->isRequired || !empty($street)) {
             array_unshift($cityRules, 'required');
         }
         // State
@@ -53,7 +53,7 @@ class AddressValidator
             'integer',
             'exists:address_states,id'
         ];
-        if ($this->isRequired) {
+        if ($this->isRequired || !empty($street)) {
             array_unshift($stateRules, 'required');
         }
         // Validate City & State
@@ -80,7 +80,7 @@ class AddressValidator
                 array_unshift($zipRules, 'regex:/' . $postalRegex->postal_regex . '/');
             }
         }
-        if ($this->isRequired) {
+        if ($this->isRequired || !empty($street)) {
             array_unshift($zipRules, 'required');
         }
         // Validate Zip
