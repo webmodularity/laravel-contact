@@ -14,14 +14,17 @@ class CreatePeople extends Migration
     {
         Schema::create('people', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('email', 255)->nullable()->unique();
+            $table->string('email', 255);
             $table->string('prefix', 5)->nullable();
             $table->string('first_name', 255)->nullable();
             $table->string('middle_name', 255)->nullable();
             $table->string('last_name', 255)->nullable();
             $table->string('suffix', 10)->nullable();
-            $table->string('nickname', 255)->nullable()->index();
+            $table->string('nickname', 255)->nullable();
+            $table->timestamps();
+            $table->unique(('email'));
             $table->index(['last_name', 'first_name']);
+            $table->index('nickname');
         });
     }
 
