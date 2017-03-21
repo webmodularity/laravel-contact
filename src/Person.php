@@ -35,6 +35,23 @@ class Person extends Model
         return $this->hasOne('WebModularity\LaravelUser\User');
     }
 
+    public function userInvitations()
+    {
+        return $this->hasMany('WebModularity\LaravelUser\UserInvitation');
+    }
+
+    public function scopeHasUser($query, $hasUser = true)
+    {
+        $operator = $hasUser ? '>' : '<=';
+        return $query->withCount('user')->where('user_count', $operator, 0);
+    }
+
+    public function scopeHasUserInvitations($query, $hasUserInvitations = true)
+    {
+        $operator = $hasUserInvitations ? '>=' : '<';
+        return $query->withCount('userInvitations')->where('user_invitations_count', $operator, 1);
+    }
+
     public function getFullName()
     {
         return $this->first_name . ' ' . $this->last_name;
