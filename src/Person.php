@@ -30,6 +30,11 @@ class Person extends Model
         'email', 'prefix', 'first_name', 'middle_name', 'last_name', 'suffix', 'nickname'
     ];
 
+    public function user()
+    {
+        return $this->hasOne('WebModularity\LaravelUser\User');
+    }
+
     public function getFullName()
     {
         return $this->first_name . ' ' . $this->last_name;
