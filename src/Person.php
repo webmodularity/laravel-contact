@@ -43,13 +43,13 @@ class Person extends Model
     public function scopeHasUser($query, $hasUser = true)
     {
         $operator = $hasUser ? '>' : '<=';
-        return $query->withCount('user')->where('user_count', $operator, 0);
+        return $query->withCount('user')->having('user_count', $operator, 0);
     }
 
     public function scopeHasUserInvitations($query, $hasUserInvitations = true)
     {
         $operator = $hasUserInvitations ? '>=' : '<';
-        return $query->withCount('userInvitations')->where('user_invitations_count', $operator, 1);
+        return $query->withCount('userInvitations')->having('user_invitations_count', $operator, 1);
     }
 
     public function getFullName()
