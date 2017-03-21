@@ -16,7 +16,7 @@ class CreatePhones extends Migration
             $table->increments('id');
             $table->char('area_code', 3);
             $table->char('number', 7);
-            $table->string('extension', 5);
+            $table->string('extension', 7)->default('');
             $table->unique(['area_code', 'number', 'extension']);
         });
     }
