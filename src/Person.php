@@ -27,8 +27,19 @@ class Person extends Model
      * @var array
      */
     protected $fillable = [
-        'email', 'prefix', 'first_name', 'middle_name', 'last_name', 'suffix', 'nickname'
+        'email',
+        'prefix',
+        'first_name',
+        'middle_name',
+        'last_name',
+        'suffix',
+        'nickname'
     ];
+
+    public function phones()
+    {
+        return $this->belongsToMany(Phone::class)->withPivot(['phone_type_id', 'is_primary']);
+    }
 
     public function user()
     {
