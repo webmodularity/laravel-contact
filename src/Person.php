@@ -61,6 +61,13 @@ class Person extends Model
         }]);
     }
 
+    public function scopeWithPrimaryAddress($query)
+    {
+        return $query->with(['addresses' => function ($query) {
+            $query->wherePivot('address_type_id', '=', 1);
+        }]);
+    }
+
     public function scopeHasUser($query, $hasUser = true)
     {
         $operator = $hasUser ? '>' : '<=';
