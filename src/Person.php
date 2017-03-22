@@ -39,6 +39,11 @@ class Person extends Model
         return $this->belongsToMany(Phone::class)->withPivot(['phone_type_id', 'is_primary']);
     }
 
+    public function addresses()
+    {
+        return $this->belongsToMany(Address::class)->withPivot(['address_type_id']);
+    }
+
     public function user()
     {
         return $this->hasOne('WebModularity\LaravelUser\User');
