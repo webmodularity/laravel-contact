@@ -52,7 +52,7 @@ class Person extends Model
     public function scopeWithPrimaryPhone($query)
     {
         return $query->with(['phones' => function ($query) {
-            $query->wherePivot('is_primary', '=', 1)->limit(1);
+            $query->wherePivot('is_primary', '=', 1);
         }]);
     }
 
