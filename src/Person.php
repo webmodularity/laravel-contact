@@ -51,6 +51,13 @@ class Person extends Model
         return $this->hasMany('WebModularity\LaravelUser\UserInvitation');
     }
 
+    public function scopeWithPrimaryPhone($query)
+    {
+        return $query->with(['phones' => function ($query) {
+            $query->wherePivot('is_primary', '=', 1)->limit(1);
+        }]);
+    }
+
     public function scopeHasUser($query, $hasUser = true)
     {
         $operator = $hasUser ? '>' : '<=';
