@@ -22,8 +22,10 @@ class CreatePeople extends Migration
             $table->string('suffix', 10)->nullable();
             $table->string('nickname', 255)->nullable();
             $table->timestamps();
+            $table->softDeletes();
             $table->unique(('email'));
-            $table->index(['last_name', 'first_name']);
+            $table->index(['last_name', 'first_name', 'deleted_at']);
+            $table->index(['deleted_at', 'email']);
             $table->index('nickname');
         });
     }
