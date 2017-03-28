@@ -19,6 +19,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Person extends Model
 {
+    use SoftDeletes;
+
     /**
      * The attributes that are mass assignable.
      *
@@ -33,6 +35,8 @@ class Person extends Model
         'suffix',
         'nickname'
     ];
+
+    protected $dates = ['deleted_at'];
 
     public function phones()
     {
