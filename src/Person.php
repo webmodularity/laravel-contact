@@ -3,6 +3,7 @@
 namespace WebModularity\LaravelContact;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
  * WebModularity\LaravelContact\Person
