@@ -17,6 +17,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Address extends Model
 {
+    const TYPE_PRIMARY = 1;
+
     public $timestamps = false;
 
     protected $fillable = [
