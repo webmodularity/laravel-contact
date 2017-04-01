@@ -37,4 +37,9 @@ class Phone extends Model
     {
         return '(' . $this->area_code . ') ' . $this->number;
     }
+
+    public static function splitFull($fullPhone)
+    {
+
+    }
 }
