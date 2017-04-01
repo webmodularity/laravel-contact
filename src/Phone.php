@@ -41,7 +41,7 @@ class Phone extends Model
     public static function splitFull($fullPhone)
     {
         if (!empty($fullPhone)) {
-            if (preg_match("/^\((\d{3})\)\s?(\d{3})\-?(\d{4})\s?x?(\d{1,7})$/", $fullPhone, $match)) {
+            if (preg_match("/^\((\d{3})\)\s?(\d{3})\-?(\d{4})\s?x?(\d{1,7})?$/", $fullPhone, $match)) {
                 $ext = isset($match[4]) && !empty($match[4])
                     ? $match[4]
                     : '';
