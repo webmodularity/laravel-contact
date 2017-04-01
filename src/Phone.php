@@ -32,4 +32,9 @@ class Phone extends Model
     {
         return $this->belongsToMany(Person::class)->withPivot(['phone_type_id', 'is_primary']);
     }
+
+    public function getFull()
+    {
+        return '(' . $this->area_code . ') ' . $this->number;
+    }
 }
