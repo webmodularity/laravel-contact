@@ -55,4 +55,23 @@ class Phone extends Model
 
         return null;
     }
+
+    public static function getTypeConstants()
+    {
+        $oClass = new \ReflectionClass(__CLASS__);
+        return array_where($oClass->getConstants(), function ($value, $key) {
+            return substr($key, 0, 5) == 'TYPE_';
+        });
+    }
+
+    public static function getTypeName($typeId)
+    {
+        foreach (static::getTypeConstants() as $key => $value) {
+            if ($typeId === $value) {
+                return substr($key, 5);
+            }
+        };
+
+        return null;
+    }
 }
