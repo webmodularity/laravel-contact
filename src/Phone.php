@@ -30,7 +30,7 @@ class Phone extends Model
 
     public function people()
     {
-        return $this->belongsToMany(Person::class)->withPivot(['phone_type_id', 'is_primary']);
+        return $this->belongsToMany(Person::class)->withPivot(['phone_type_id']);
     }
 
     public function getFull()

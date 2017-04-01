@@ -41,7 +41,7 @@ class Person extends Model
 
     public function phones()
     {
-        return $this->belongsToMany(Phone::class)->withPivot(['phone_type_id', 'is_primary']);
+        return $this->belongsToMany(Phone::class)->withPivot(['phone_type_id']);
     }
 
     public function addresses()
@@ -57,13 +57,6 @@ class Person extends Model
     public function userInvitations()
     {
         return $this->hasMany('WebModularity\LaravelUser\UserInvitation');
-    }
-
-    public function scopeWithPrimaryPhone($query)
-    {
-        return $query->with(['phones' => function ($query) {
-            $query->wherePivot('is_primary', '=', 1);
-        }]);
     }
 
     public function scopeWithPrimaryAddress($query)
