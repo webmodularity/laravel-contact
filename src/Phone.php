@@ -15,6 +15,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class Phone extends Model
 {
+    const TYPE_MOBILE = 1;
+    const TYPE_OFFICE = 2;
+    const TYPE_HOME = 3;
+    const TYPE_FAX = 4;
+
     public $timestamps = false;
 
     protected $fillable = [
