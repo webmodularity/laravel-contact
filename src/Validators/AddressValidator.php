@@ -10,7 +10,7 @@ class AddressValidator
 {
     public function validate($attribute, $value, $parameters, $validator)
     {
-        $address = Address::create($value);
+        $address = new Address($value);
 
         if ($validator->hasRule($attribute, 'Nullable') && $address->isEmpty()) {
             return true;
