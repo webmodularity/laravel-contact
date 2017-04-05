@@ -12,9 +12,9 @@ class AddressValidator
         $street['street'] = array_pull($value, 'street');
         $zip['zip'] = array_pull($value, 'zip');
 
-        if (empty($street['street'])) {
-            return true;
-        }
+        //if (empty($street['street'])) {
+        //    return true;
+        //}
 
         // Validate Street, City, and State
         $addressValidator = Validator::make($value, [
