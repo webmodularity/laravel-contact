@@ -42,6 +42,11 @@ class Address extends Model
         return $this->belongsTo(AddressState::class);
     }
 
+    public function isEmpty()
+    {
+        return empty($this->street);
+    }
+
     /**
      * Try and delete address record but ignore failures as this address may be related to other records
      *

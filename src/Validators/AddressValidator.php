@@ -3,19 +3,17 @@
 namespace WebModularity\LaravelContact\Validators;
 
 use Validator;
+use WebModularity\LaravelContact\Address;
 use WebModularity\LaravelContact\AddressState;
 
 class AddressValidator
 {
     public function validate($attribute, $value, $parameters, $validator)
     {
-        dd($value);
-        $addressModel = Address::create($value);
+        $address = Address::create($value);
+        $nullable = $validator->hasRule($attribute, 'Nullable');
 
-        $street['street'] = array_pull($value, 'street');
-        $zip['zip'] = array_pull($value, 'zip');
-
-        if (empty($street['street'])) {
+        if ($nullable && $address->isEmpty()) {
             return true;
         }
 
@@ -33,13 +31,13 @@ class AddressValidator
         if ($addressValidator->passes()) {
             $postalRegex = AddressState::select('postal_regex')
                 ->leftJoin('address_countries', 'address_states.country_id', '=', 'address_countries.id')
-                ->where('address_states.id', $value['state_id'])
+                ->where('address_states.id', $address->state_id)
                 ->first();
             $zipRegex = !is_null($postalRegex)
                 ? $postalRegex->postal_regex
                 : '.*';
             // Validate Zip
-            $zipValidator = Validator::make($zip, [
+            $zipValidator = Validator::make(['zip' => $address->zip], [
                 'zip' => [
                     'required',
                     'regex:/' . $zipRegex . '/'
