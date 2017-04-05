@@ -11,9 +11,8 @@ class AddressValidator
     public function validate($attribute, $value, $parameters, $validator)
     {
         $address = Address::create($value);
-        $nullable = $validator->hasRule($attribute, 'Nullable');
 
-        if ($nullable && $address->isEmpty()) {
+        if ($validator->hasRule($attribute, 'Nullable') && $address->isEmpty()) {
             return true;
         }
 
