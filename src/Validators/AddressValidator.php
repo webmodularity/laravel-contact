@@ -3,104 +3,63 @@
 namespace WebModularity\LaravelContact\Validators;
 
 use Validator;
+use WebModularity\LaravelContact\AddressState;
 
 class AddressValidator
 {
-    protected $isRequired = false;
-    protected $attribute;
-    protected $validator;
-
     public function validate($attribute, $value, $parameters, $validator)
     {
-        $this->attribute = $attribute;
-        $this->validator = $validator;
-
-        $hasError = false;
-        $this->isRequired = $this->validator->hasRule($this->attribute, 'Required');
-
         $street['street'] = array_pull($value, 'street');
         $zip['zip'] = array_pull($value, 'zip');
 
-        // Street
-        $streetRules = [
-            'max:255'
-        ];
-        if ($this->isRequired) {
-            array_unshift($streetRules, 'required');
-        }
-        // Validate Street
-        $streetValidator = Validator::make($street, [
-            'street' => $streetRules
-        ]);
-
-        if ($streetValidator->fails()) {
-            $this->transferErrors($streetValidator->errors()->getMessages());
-            $hasError = true;
-        } elseif (is_null($street['street'])) {
-            // Address is optional and street is null, ignore address
+        if (empty($street['street'])) {
             return true;
         }
 
-        // City
-        $cityRules = [
-            'max:100'
-        ];
-        if ($this->isRequired || !empty($street)) {
-            array_unshift($cityRules, 'required');
-        }
-        // State
-        $stateRules = [
-            'integer',
-            'exists:address_states,id'
-        ];
-        if ($this->isRequired || !empty($street)) {
-            array_unshift($stateRules, 'required');
-        }
-        // Validate City & State
+        // Validate Street, City, and State
         $addressValidator = Validator::make($value, [
-            'city' => $cityRules,
-            'state_id' => $stateRules
+            'street' => 'required|max:255',
+            'city' => 'required|max:100',
+            'state_id' => [
+                'required',
+                'integer',
+                'exists:address_states,id'
+            ]
         ]);
 
         if ($addressValidator->fails()) {
-            $this->transferErrors($addressValidator->errors()->getMessages());
+            $this->transferErrors($addressValidator->errors()->getMessages(), $attribute, $validator);
             $hasError = true;
-        }
-
-        // Zip
-        $zipRules = [
-            'max:20'
-        ];
-        if (!is_null($value['state_id']) && !$this->validator->errors()->has($this->attribute . '.' . 'state_id')) {
+        } else {
             $postalRegex = AddressState::select('postal_regex')
                 ->leftJoin('address_countries', 'address_states.country_id', '=', 'address_countries.id')
                 ->where('address_states.id', $value['state_id'])
                 ->first();
-            if (!is_null($postalRegex)) {
-                array_unshift($zipRules, 'regex:/' . $postalRegex->postal_regex . '/');
+            $zipRegex = !is_null($postalRegex)
+                ? $postalRegex->postal_regex
+                : '.*';
+            // Validate Zip
+            $zipValidator = Validator::make($zip, [
+                'zip' => [
+                    'required',
+                    'regex:/' . $zipRegex . '/'
+                ]
+            ]);
+            if ($zipValidator->passes()) {
+                return true;
+            } else {
+                $this->transferErrors($zipValidator->errors()->getMessages(), $attribute, $validator);
             }
         }
-        if ($this->isRequired || !empty($street)) {
-            array_unshift($zipRules, 'required');
-        }
-        // Validate Zip
-        $zipValidator = Validator::make($zip, [
-            'zip' => $zipRules
-        ]);
 
-        if ($zipValidator->fails()) {
-            $this->transferErrors($zipValidator->errors()->getMessages());
-            $hasError = true;
-        }
-
-        return ! $hasError;
+        return false;
     }
 
-    protected function transferErrors($errors)
+    protected function transferErrors($errors, $attribute, $validator)
     {
         foreach ($errors as $key => $allErrors) {
             foreach ($allErrors as $error) {
-                $this->validator->errors()->add($this->attribute . '.' . $key, $error);
+                $validator->errors()->add($attribute . '.' . $key, $error);
             }
         }
     }
