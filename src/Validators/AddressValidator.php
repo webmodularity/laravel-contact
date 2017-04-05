@@ -27,10 +27,7 @@ class AddressValidator
             ]
         ]);
 
-        if ($addressValidator->fails()) {
-            $this->transferErrors($addressValidator->errors()->getMessages(), $attribute, $validator);
-            $hasError = true;
-        } else {
+        if ($addressValidator->passes()) {
             $postalRegex = AddressState::select('postal_regex')
                 ->leftJoin('address_countries', 'address_states.country_id', '=', 'address_countries.id')
                 ->where('address_states.id', $value['state_id'])
@@ -50,6 +47,8 @@ class AddressValidator
             } else {
                 $this->transferErrors($zipValidator->errors()->getMessages(), $attribute, $validator);
             }
+        } else {
+            $this->transferErrors($addressValidator->errors()->getMessages(), $attribute, $validator);
         }
 
         return false;
