@@ -9,12 +9,15 @@ class AddressValidator
 {
     public function validate($attribute, $value, $parameters, $validator)
     {
+        dd($value);
+        $addressModel = Address::create($value);
+
         $street['street'] = array_pull($value, 'street');
         $zip['zip'] = array_pull($value, 'zip');
 
-        //if (empty($street['street'])) {
-        //    return true;
-        //}
+        if (empty($street['street'])) {
+            return true;
+        }
 
         // Validate Street, City, and State
         $addressValidator = Validator::make($value, [
