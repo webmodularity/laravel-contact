@@ -1,6 +1,6 @@
 <?php
 
-namespace WebModularity\LaravelContact;
+namespace WebModularity\LaravelContact\Validators;
 
 use Validator;
 
