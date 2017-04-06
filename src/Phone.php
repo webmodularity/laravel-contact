@@ -33,11 +33,6 @@ class Phone extends Model
         return $this->belongsToMany(Person::class)->withPivot(['phone_type_id']);
     }
 
-    public function getFull()
-    {
-        return '(' . $this->area_code . ') ' . substr($this->number, 0, 3) . '-' . substr($this->number, 3, 4);
-    }
-
     public static function splitFull($fullPhone)
     {
         if (!empty($fullPhone)) {
