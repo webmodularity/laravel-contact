@@ -12,7 +12,7 @@ class PersonObserver
      * @param  Person  $person
      * @return void
      */
-    public function saving(Person $person)
+    public function updated(Person $person)
     {
         \Log::critical($person);
     }
