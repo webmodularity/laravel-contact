@@ -34,9 +34,5 @@ class ContactServiceProvider extends ServiceProvider
             '\WebModularity\LaravelContact\Validators\PhoneValidator@validate',
             $this->app->translator->trans('contact-validator::validation.phone')
         );
-
-        // Observers
-        // Person
-        Person::observe(PersonObserver::class);
     }
 }
