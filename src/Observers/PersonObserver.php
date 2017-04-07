@@ -14,6 +14,7 @@ class PersonObserver
      */
     public function saving(Person $person)
     {
+        \Log::critical('Fired saving event on Person model.');
         foreach ($person->phones as $phone) {
             foreach ($phone->getDirty() as $dirtyAttribute => $dirtyValue) {
                 $original = $phone->getOriginal($dirtyAttribute);
