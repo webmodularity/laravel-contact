@@ -71,11 +71,6 @@ class Person extends Model
         return $query->withCount('userInvitations')->having('user_invitations_count', $operator, 1);
     }
 
-    public function getFullName()
-    {
-        return $this->first_name . ' ' . $this->last_name;
-    }
-
     /**
      * Will update the specified field if current value of that field is null
      * @param $fieldName
