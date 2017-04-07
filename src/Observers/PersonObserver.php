@@ -12,8 +12,13 @@ class PersonObserver
      * @param  Person  $person
      * @return void
      */
-    public function updated(Person $person)
+    public function saving(Person $person)
     {
-        \Log::critical($person);
+        foreach ($person->phones as $phone) {
+            foreach ($phone->getDirty() as $dirtyAttribute => $dirtyValue) {
+                $original = $phone->getOriginal($dirtyAttribute);
+                \Log::critical($dirtyAttribute . ': ' . $dirtyValue . ' - ' . $original);
+            }
+        }
     }
 }
