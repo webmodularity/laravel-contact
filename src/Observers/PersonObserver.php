@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Observers;
+namespace WebModularity\LaravelContact\Observers;
 
 use WebModularity\LaravelContact\Person;
 

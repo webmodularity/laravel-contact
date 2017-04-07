@@ -2,7 +2,7 @@
 
 namespace WebModularity\LaravelContact;
 
-use App\Observers\PersonObserver;
+use WebModularity\LaravelContact\Observers\PersonObserver;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Validator;
 
