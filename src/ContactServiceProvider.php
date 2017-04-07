@@ -2,6 +2,7 @@
 
 namespace WebModularity\LaravelContact;
 
+use App\Observers\PersonObserver;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Validator;
 
@@ -33,5 +34,9 @@ class ContactServiceProvider extends ServiceProvider
             '\WebModularity\LaravelContact\Validators\PhoneValidator@validate',
             $this->app->translator->trans('contact-validator::validation.phone')
         );
+
+        // Observers
+        // Person
+        Person::observe(PersonObserver::class);
     }
 }
