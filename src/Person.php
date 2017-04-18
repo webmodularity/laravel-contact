@@ -71,6 +71,11 @@ class Person extends Model
         return $query->withCount('userInvitations')->having('user_invitations_count', $operator, 1);
     }
 
+    public function getRecordIdentAttribute($value)
+    {
+        return $this->email;
+    }
+
     /**
      * Will update the specified field if current value of that field is null
      * @param $fieldName
