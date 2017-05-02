@@ -60,21 +60,9 @@ class Person extends Model
         return $query->withCount('user')->having('user_count', $operator, 0);
     }
 
-    /**
-     * Will update the specified field if current value of that field is null
-     * @param $fieldName
-     * @param $value
-     * @return $this
-     */
-
-    public function updateIfNull($fieldName, $value)
+    public function nameIsEmpty()
     {
-        if (is_null($this->$fieldName) && !is_null($value)) {
-            $this->{$fieldName} = $value;
-            $this->save();
-        }
-
-        return $this;
+        return (empty($this->first_name) || empty($this->last_name));
     }
 
     /**
