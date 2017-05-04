@@ -54,12 +54,6 @@ class Person extends Model
         return $this->hasOne('WebModularity\LaravelUser\User');
     }
 
-    public function scopeHasUser($query, $hasUser = true)
-    {
-        $operator = $hasUser ? '>' : '<=';
-        return $query->withCount('user')->having('user_count', $operator, 0);
-    }
-
     public function nameIsEmpty()
     {
         return (empty($this->first_name) || empty($this->last_name));
@@ -92,5 +86,10 @@ class Person extends Model
             'firstName' => null,
             'lastName' => null
         ];
+    }
+
+    public function syncPhones($phonesInput = [])
+    {
+
     }
 }
