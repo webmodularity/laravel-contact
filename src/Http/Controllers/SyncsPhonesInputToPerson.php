@@ -14,7 +14,7 @@ trait SyncsPhonesInputToPerson
      */
     protected function syncPhonesToPerson(Person $person, $fieldName = 'phones')
     {
-        $phones = $person->phones()->keyBy('pivot.phone_type_id');
+        $phones = $person->phones->keyBy('pivot.phone_type_id');
         dd($phones);
         foreach (request($fieldName) as $phoneKey => $phoneValue) {
             if (!is_null(Phone::splitFull($phoneValue))) {
