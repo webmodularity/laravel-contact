@@ -14,18 +14,20 @@ trait SyncsPhonesInputToPerson
      */
     protected function syncPhonesToPerson(Person $person, $fieldName = 'phones')
     {
-        $phones = $person->phones->keyBy('pivot.phone_type_id');
-        dd($phones);
+        $phonesOld = $person->phones->keyBy('pivot.phone_type_id');
         foreach (request($fieldName) as $phoneKey => $phoneValue) {
-            if (!is_null(Phone::splitFull($phoneValue))) {
-                $phone = Phone::firstOrCreate(Phone::splitFull($phoneValue));
-                if (!is_null($phone)) {
-                    $phoneIds[$phone->id] = [
-                        'phone_type_id' => constant(Phone::class . '::TYPE_' . strtoupper($phoneKey))
-                    ];
-                }
+            $phoneSplit = Phone::splitFull($phoneValue);
+            $phoneTypeId = constant(Phone::class . '::' . 'TYPE_' . strtoupper($phoneKey));
+            $phone = !is_null($phoneSplit) ? Phone::firstOrCreate($phoneSplit) : null;
+            $phoneOld = isset($phonesOld[$phoneTypeId]) ? $phonesOld[$phoneTypeId] : null;
+            if (is_null($phone) && !is_null($phoneOld)) {
+                $person->phones()->detach($phoneOld->id);
+            } elseif (!is_null($phone) && is_null($phoneOld)) {
+                $person->phones()->attach($phone, ['phone_type_id' => $phoneTypeId]);
+            } elseif (!is_null($phone) && !is_null($phoneOld) && $phone->id != $phoneOld->id) {
+                $person->phones()->detach($phoneOld->id);
+                $person->phones()->attach($phone, ['phone_type_id' => $phoneTypeId]);
             }
         }
-        $person->phones()->sync($phoneIds);
     }
 }
