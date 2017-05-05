@@ -33,7 +33,7 @@ class Phone extends Model
      *
      * @var array
      */
-    protected $touches = ['people', 'people.user'];
+    protected $touches = ['people'];
 
     public function people()
     {
