@@ -23,7 +23,6 @@ trait SyncsPhonesInputToPerson
             if (is_null($phone) && !is_null($phoneOld)) {
                 $person->phones()->detach($phoneOld);
             } elseif (!is_null($phone) && is_null($phoneOld)) {
-                \Log::warning('Attaching: ' . $phoneOld->id);
                 $person->phones()->attach($phone, ['phone_type_id' => $phoneTypeId]);
             } elseif (!is_null($phone) && !is_null($phoneOld) && $phone->id != $phoneOld->id) {
                 $person->phones()->detach($phoneOld);
