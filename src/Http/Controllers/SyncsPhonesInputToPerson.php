@@ -22,13 +22,13 @@ trait SyncsPhonesInputToPerson
             $phoneOld = isset($phonesOld[$phoneTypeId]) ? $phonesOld[$phoneTypeId] : null;
             if (is_null($phone) && !is_null($phoneOld)) {
                 \Log::warning('Detaching: ' . $phoneOld);
-                $person->phones()->detach($phoneOld);
+                $person->phones()->wherePivot('phone_type_id', $phoneTypeId)->detach($phoneOld);
             } elseif (!is_null($phone) && is_null($phoneOld)) {
                 \Log::warning('Attaching: ' . $phone);
                 $person->phones()->attach($phone, ['phone_type_id' => $phoneTypeId]);
             } elseif (!is_null($phone) && !is_null($phoneOld) && $phone->id != $phoneOld->id) {
                 \Log::warning('Detaching: ' . $phoneOld);
-                $person->phones()->detach($phoneOld);
+                $person->phones()->wherePivot('phone_type_id', $phoneTypeId)->detach($phoneOld);
                 \Log::warning('Attaching: ' . $phone);
                 $person->phones()->attach($phone, ['phone_type_id' => $phoneTypeId]);
             }
