@@ -28,6 +28,13 @@ class Phone extends Model
         'extension'
     ];
 
+    /**
+     * All of the relationships to be touched.
+     *
+     * @var array
+     */
+    protected $touches = ['people', 'people.user'];
+
     public function people()
     {
         return $this->belongsToMany(Person::class)->withPivot(['phone_type_id']);
