@@ -4,8 +4,9 @@ namespace WebModularity\LaravelContact\Http\Controllers;
 
 use WebModularity\LaravelContact\Person;
 use WebModularity\LaravelContact\Phone;
+use WebModularity\LaravelContact\Address;
 
-trait SyncsPhonesInputToPerson
+trait SyncsInputToPerson
 {
     /**
      * Takes input from request() and syncs phone inputs to Person
@@ -21,17 +22,34 @@ trait SyncsPhonesInputToPerson
             $phone = !is_null($phoneSplit) ? Phone::firstOrCreate($phoneSplit) : null;
             $phoneOld = isset($phonesOld[$phoneTypeId]) ? $phonesOld[$phoneTypeId] : null;
             if (is_null($phone) && !is_null($phoneOld)) {
-                \Log::warning('Detaching: ' . $phoneOld);
                 $person->phones()->wherePivot('phone_type_id', $phoneTypeId)->detach($phoneOld);
             } elseif (!is_null($phone) && is_null($phoneOld)) {
-                \Log::warning('Attaching: ' . $phone);
                 $person->phones()->attach($phone, ['phone_type_id' => $phoneTypeId]);
             } elseif (!is_null($phone) && !is_null($phoneOld) && $phone->id != $phoneOld->id) {
-                \Log::warning('Detaching: ' . $phoneOld);
                 $person->phones()->wherePivot('phone_type_id', $phoneTypeId)->detach($phoneOld);
-                \Log::warning('Attaching: ' . $phone);
                 $person->phones()->attach($phone, ['phone_type_id' => $phoneTypeId]);
             }
+        }
+    }
+
+
+    protected function syncAddressToPerson(
+        Person $person,
+        $addressTypeId = Address::TYPE_PRIMARY,
+        $fieldName = 'address'
+    ) {
+        $addressInput = request($fieldName);
+        $address = !empty($addressInput['street'])
+            ? $address = Address::firstOrCreate($addressInput)
+            : null;
+        $addressOld = $person->addresses()->wherePivot('address_type_id', $addressTypeId)->first();
+        if (is_null($address) && !is_null($addressOld)) {
+            $person->addresses()->wherePivot('address_type_id', $addressTypeId)->detach($addressOld);
+        } elseif (!is_null($address) && is_null($addressOld)) {
+            $person->addresses()->attach($address, ['address_type_id' => $addressTypeId]);
+        } elseif (!is_null($address) && !is_null($addressOld) && $address->id != $addressOld->id) {
+            $person->addresses()->wherePivot('address_type_id', $addressTypeId)->detach($addressOld);
+            $person->addresses()->attach($address, ['address_type_id' => $addressTypeId]);
         }
     }
 }

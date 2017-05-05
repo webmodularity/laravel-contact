@@ -87,9 +87,4 @@ class Person extends Model
             'lastName' => null
         ];
     }
-
-    public function syncPhones($phonesInput = [])
-    {
-
-    }
 }
