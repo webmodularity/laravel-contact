@@ -14,7 +14,7 @@ class PersonObserver
      */
     public function deleting(Person $person)
     {
-        if (!is_null($person->user)) {
+        if ($person->isForceDeleting() && !is_null($person->user)) {
             return false;
         }
     }
