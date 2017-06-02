@@ -21,6 +21,9 @@ class ContactServiceProvider extends ServiceProvider
         // Translations
         $this->loadTranslationsFrom(__DIR__ . '/../resources/lang', 'contact-validator');
 
+        // User event observer
+        Person::observe(PersonObserver::class);
+
         // Validators
         // Address
         Validator::extend(
